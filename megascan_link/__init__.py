@@ -1,8 +1,10 @@
 
 # Designer imports
-import sd 
+import sd
+import os
 import time
 from PySide2 import QtCore
+from PySide2 import QtGui
 from PySide2 import QtWidgets
 from PySide2.QtCore import Qt
 import megascan_link.socket as socket
@@ -22,6 +24,9 @@ class Data(object):
 
 pluginData = Data()
 
+def getIcon():
+    return os.path.join(os.path.abspath(os.path.split(__file__)[0]), 'megascan_logo.png')
+
 # Plugin entry points.
 #
 def initializeSDPlugin():
@@ -34,16 +39,19 @@ def initializeSDPlugin():
     mainWindow = uiMgr.getMainWindow()
     print(mainWindow.findChildren(QtWidgets.QToolBar))
     toolbars = mainWindow.findChildren(QtWidgets.QToolBar)
+
     for toolbar in toolbars:
         if mainWindow.toolBarArea(toolbar) == Qt.ToolBarArea.TopToolBarArea:
             pluginData.toolbar = toolbar
-            pluginData.toolbarAction = toolbar.addAction("prova")
+            icon = QtGui.QIcon(getIcon())
+            pluginData.toolbarAction = toolbar.addAction(icon,"")
             break
+
     pluginData.socketThread = socket.SocketThread(parent=mainWindow)
     importer = resImporter.ResourceImporter()
     receiver = socket.SocketReceiver(parent=mainWindow,importer=importer)
     print(pluginData.socketThread,receiver)
-    pluginData.socketThread.onDataReceived.connect(receiver.onReceivedData, QtCore.Qt.QueuedConnection)
+    pluginData.socketThread.onDataReceived.connect(receiver.onReceivedData, Qt.QueuedConnection)
     pluginData.socketThread.start()
 
 
