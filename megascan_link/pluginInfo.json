@@ -1,0 +1,9 @@
+{
+    "metadata_format_version": "1",
+    "name": "megascan_link",
+    "version": "0.1.0",
+    "author": "Luca Faggion",
+    "email": "luc-af@live.it",
+    "min_designer_version": "2019.2",
+    "platform": "any"
+}
