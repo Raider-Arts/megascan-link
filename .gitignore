@@ -1,3 +1,6 @@
+#Ignore temporary folder
+temp/
+
 #vscode folder
 .vscode/
 
