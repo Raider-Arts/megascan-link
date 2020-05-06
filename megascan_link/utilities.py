@@ -1,4 +1,6 @@
-def getApp(sd):
+import sd
+
+def getApp():
 	"""Helper function to retrive the SDApplication
 	
 	Returns:
@@ -7,10 +9,10 @@ def getApp(sd):
 	context = sd.getContext()
 	return context.getSDApplication()
 
-def getUiManager(sd): 
+def getUiManager(): 
 	"""Helper function to retrive the QtPythonUIManager
 	
 	Returns:
 		QtForPythonUIMgr -- class instance
 	"""	
-	return getApp(sd).getQtForPythonUIMgr()
+	return getApp().getQtForPythonUIMgr()
