@@ -29,8 +29,8 @@ class ResourceImporter(object):
             for imprt in data:
                 folder = SDResourceFolder.sNew(parentFolder)
                 folder.setIdentifier(imprt['name'])
-                for component in imprt['components']: 
-                    SDResourceBitmap.sNewFromFile(folder, component['path'], EmbedMethod.Linked)
+                for bitmap in imprt['components']: 
+                    SDResourceBitmap.sNewFromFile(folder, bitmap['path'], EmbedMethod.Linked)
                 for mesh in imprt['meshList']:
-                    SDResourceScene.sNewFromFile(folder, mesh['path'], EmbedMethod.Linked) 
+                    SDResourceScene.sNewFromFile(folder, mesh['path'], EmbedMethod.Linked)
 
