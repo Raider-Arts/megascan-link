@@ -3,26 +3,37 @@
 import sd
 import time
 from PySide2 import QtCore
-import megascan_link.Socket as Socket
+import megascan_link.socket as socket
+from queue import Queue
+import megascan_link.utilities as utilities
+import megascan_link.resourceImporter as resImporter
 import importlib
 importlib.reload(Socket)
+importlib.reload(utilities)
+import ptvsd
 
-socketThread = None
-#
+class Data(object):
+    socketThread = None
+
+pluginData = Data()
+
 # Plugin entry points.
 #
 def initializeSDPlugin():
-    # pass
-    # Get the application and the UI Manager.
-    app = sd.getContext().getSDApplication()
-    uiMgr = app.getQtForPythonUIMgr()
+	# Debug Studd
+    # ptvsd.enable_attach()
+    # ptvsd.wait_for_attach()
+    # ptvsd.break_into_debugger() 
+    uiMgr = utilities.getUiManager(sd)  
     # Get the main window to set the thread parent of
     mainWindow = uiMgr.getMainWindow()
-    socketThread = Socket.SocketThread(parent=mainWindow)
-    receiver = Socket.SocketReceiver(parent=mainWindow)
-    print(socketThread,receiver)
-    socketThread.onDataReceived.connect(receiver.onReceivedData, QtCore.Qt.QueuedConnection)
-    socketThread.start()
+    pluginData.socketThread = socket.SocketThread(parent=mainWindow)
+    importer = resImporter.ResourceImporter(utilities.getApp(sd))
+    receiver = socket.SocketReceiver(parent=mainWindow,importer=importer)
+    print(pluginData.socketThread,receiver)
+    pluginData.socketThread.onDataReceived.connect(receiver.onReceivedData, QtCore.Qt.QueuedConnection)
+    pluginData.socketThread.start()
 
-def uninitializeSDPlugin():
-    pass
+def uninitializeSDPlugin(): 
+    #stopping socket
+    pluginData.socketThread.close()
