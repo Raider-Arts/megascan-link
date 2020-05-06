@@ -2,8 +2,16 @@ import megascan_link.utilities as utilities
 import sd
 from sd.api.sdresourcefolder import *
 from sd.api.sdresourcebitmap import *
+from sd.api.sdresourcescene import *
 
 class ResourceImporter(object):
+
+    def _isAlreadyImported(self, name, package):
+        for resource in package.getChildrenResources(False): 
+            if resource.getIdentifier() == name:
+                return True
+        return False
+
 
     def importFromData(self, data): 
         sdPackageMgr = utilities.getApp().getPackageMgr()
@@ -23,3 +31,6 @@ class ResourceImporter(object):
                 folder.setIdentifier(imprt['name'])
                 for component in imprt['components']: 
                     SDResourceBitmap.sNewFromFile(folder, component['path'], EmbedMethod.Linked)
+                for mesh in imprt['meshList']:
+                    SDResourceScene.sNewFromFile(folder, mesh['path'], EmbedMethod.Linked) 
+
