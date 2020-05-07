@@ -1,5 +1,6 @@
 from PySide2 import QtCore
-# import time
+import megascan_link
+from megascan_link import config
 import socket
 import sys
 import io
@@ -14,12 +15,17 @@ class SocketThread(QtCore.QThread):
         # ptvsd.enable_attach()
         # ptvsd.wait_for_attach()
         # ptvsd.break_into_debugger()
+        # get config settings
+        conf = config.ConfigSettings()
+        # get the port number
+        port = int(conf.getConfigSetting("Socket","port"))
+
         # Create a TCP/IP socket
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         # sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         sock.settimeout(5)
         #bind to an address and port
-        server_address = ('localhost', 24981)
+        server_address = ('localhost', port)
         print('starting up Socket on {} with port {}'.format(server_address[0],server_address[1]))
         sock.bind(server_address)
 

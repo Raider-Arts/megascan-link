@@ -1,4 +1,9 @@
 import sd
+import os
+
+def getAbsCurrentPath(append):
+	return os.path.join(os.path.abspath(os.path.split(__file__)[0]), append)
+
 
 def getApp():
 	"""Helper function to retrive the SDApplication
