@@ -2,6 +2,12 @@
 # List of files ignored when packaging the plugin
 ##################################################
 
+#Ignore readmes
+*.md
+
+#Ingnore ui designes
+uiDesign/
+
 # Ignore the packaging script.
 makepackage.py
 
