@@ -18,15 +18,23 @@ importlib.reload(socket)
 importlib.reload(utilities)
 importlib.reload(resImporter)
 importlib.reload(config)
+importlib.reload(dialogs)
 import ptvsd
 
 class Data(object):
     socketThread = None
     toolbarAction = None
     toolbar = None
+    settingDialog = None
 
 def getIcon():
     return os.path.join(os.path.abspath(os.path.split(__file__)[0]), 'megascan_logo.png')
+
+def openSettings():
+    uiMgr = utilities.getUiManager()  
+    mainWindow = uiMgr.getMainWindow()
+    Data.settingDialog = dialogs.SettingsDialog(parent=mainWindow)
+    Data.settingDialog.show()
 
 # Plugin entry points.
 #
@@ -39,7 +47,8 @@ def initializeSDPlugin():
     # Set up initial config proprieties
     conf = config.ConfigSettings()
     initConfig = configparser.ConfigParser()
-    initConfig["Socket"] = {"port": 24981}
+    initConfig["Socket"] = {"port": 24981,
+                            "timeout": 5}
     conf.setUpInitialConfig(initConfig)
 
     uiMgr = utilities.getUiManager()  
@@ -51,9 +60,10 @@ def initializeSDPlugin():
         if mainWindow.toolBarArea(toolbar) == Qt.ToolBarArea.TopToolBarArea:
             Data.toolbar = toolbar
             icon = QtGui.QIcon(getIcon())
-            Data.toolbarAction = toolbar.addAction(icon,None)
+            Data.toolbarAction = toolbar.addAction(icon, None)
             Data.toolbar = Data.toolbarAction.parentWidget()
             break
+    Data.toolbarAction.triggered.connect(openSettings)
 
     Data.socketThread = socket.SocketThread(parent=mainWindow)
     importer = resImporter.ResourceImporter()
