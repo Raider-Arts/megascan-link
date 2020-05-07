@@ -75,6 +75,47 @@ class Ui_Dialog(object):
         self.tabWidget.addTab(self.connTab, "")
         self.tab_2 = QWidget()
         self.tab_2.setObjectName(u"tab_2")
+        self.gridLayout_3 = QGridLayout(self.tab_2)
+        self.gridLayout_3.setObjectName(u"gridLayout_3")
+        self.verticalLayout_2 = QVBoxLayout()
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.groupBox = QGroupBox(self.tab_2)
+        self.groupBox.setObjectName(u"groupBox")
+        self.gridLayout_5 = QGridLayout(self.groupBox)
+        self.gridLayout_5.setObjectName(u"gridLayout_5")
+        self.formLayout_3 = QFormLayout()
+        self.formLayout_3.setObjectName(u"formLayout_3")
+        self.checkBox_2 = QCheckBox(self.groupBox)
+        self.checkBox_2.setObjectName(u"checkBox_2")
+
+        self.formLayout_3.setWidget(0, QFormLayout.LabelRole, self.checkBox_2)
+
+
+        self.gridLayout_5.addLayout(self.formLayout_3, 1, 0, 1, 1)
+
+
+        self.verticalLayout_2.addWidget(self.groupBox)
+
+        self.groupBox_2 = QGroupBox(self.tab_2)
+        self.groupBox_2.setObjectName(u"groupBox_2")
+        self.gridLayout_4 = QGridLayout(self.groupBox_2)
+        self.gridLayout_4.setObjectName(u"gridLayout_4")
+        self.formLayout_2 = QFormLayout()
+        self.formLayout_2.setObjectName(u"formLayout_2")
+        self.checkBox = QCheckBox(self.groupBox_2)
+        self.checkBox.setObjectName(u"checkBox")
+
+        self.formLayout_2.setWidget(0, QFormLayout.LabelRole, self.checkBox)
+
+
+        self.gridLayout_4.addLayout(self.formLayout_2, 0, 0, 1, 1)
+
+
+        self.verticalLayout_2.addWidget(self.groupBox_2)
+
+
+        self.gridLayout_3.addLayout(self.verticalLayout_2, 0, 0, 1, 1)
+
         self.tabWidget.addTab(self.tab_2, "")
 
         self.verticalLayout.addWidget(self.tabWidget)
@@ -123,7 +164,11 @@ class Ui_Dialog(object):
         self.label_2.setText(QCoreApplication.translate("Dialog", u"Timeout (sec)", None))
         self.label_3.setText(QCoreApplication.translate("Dialog", u"Changing port number require a restart of the socket after the current timeout expires (so wait at least the current timeout to use the export on Bridge)", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.connTab), QCoreApplication.translate("Dialog", u"Connection", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QCoreApplication.translate("Dialog", u"Tab 2", None))
+        self.groupBox.setTitle(QCoreApplication.translate("Dialog", u"General", None))
+        self.checkBox_2.setText(QCoreApplication.translate("Dialog", u"Create New Graph", None))
+        self.groupBox_2.setTitle(QCoreApplication.translate("Dialog", u"3D Asset", None))
+        self.checkBox.setText(QCoreApplication.translate("Dialog", u"Import LODs", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QCoreApplication.translate("Dialog", u"Import", None))
         self.saveBtn.setText(QCoreApplication.translate("Dialog", u"Save", None))
         self.cancelBtn.setText(QCoreApplication.translate("Dialog", u"Cancel", None))
     # retranslateUi
