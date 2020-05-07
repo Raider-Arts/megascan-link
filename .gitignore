@@ -1,3 +1,6 @@
+#ignore temp ini file
+megascan_link/*.ini
+
 #Ignore temporary folder
 temp/
 
