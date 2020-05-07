@@ -1,7 +1,11 @@
 from PySide2 import QtCore
+from PySide2 import QtGui
 from PySide2.QtCore import Qt
 from PySide2 import QtWidgets
 from pathlib import Path
+import megascan_link
+from megascan_link import config
+from megascan_link.ui import settings_dialog
 
 
 class SelectPackageDialog(QtWidgets.QDialog):
@@ -52,7 +56,13 @@ class SelectPackageDialog(QtWidgets.QDialog):
             self.close()
 
 
-class SettingsDialog(QtWidgets.QDialog):
+class SettingsDialog(QtWidgets.QDialog, settings_dialog.Ui_Dialog):
 
     def __init__(self, parent=None):
-        super().__init__(parent=None)
+        self.config = config.ConfigSettings()
+        super().__init__(parent=parent)
+        self.setupUi(self)
+        self.portNumber.setText(self.config.getConfigSetting("Socket", "port"))
+        self.portNumber.setValidator(QtGui.QIntValidator(self))
+        self.timeoutNumber.setText(self.config.getConfigSetting("Socket", "timeout"))
+        self.timeoutNumber.setValidator(QtGui.QIntValidator(0,60,self))
