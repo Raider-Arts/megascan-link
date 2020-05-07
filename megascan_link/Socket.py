@@ -6,10 +6,12 @@ import sys
 import io
 import json
 import ptvsd
+import time
 
 class SocketThread(QtCore.QThread):
     onDataReceived = QtCore.Signal(object)
     shouldClose = False
+    started = False
 
     def run(self):
         # ptvsd.enable_attach()
@@ -26,8 +28,14 @@ class SocketThread(QtCore.QThread):
         sock.settimeout(5)
         #bind to an address and port
         server_address = ('localhost', port)
-        print('starting up Socket on {} with port {}'.format(server_address[0],server_address[1]))
-        sock.bind(server_address)
+        print('trying to start up socket on {} with port {}'.format(server_address[0], server_address[1]))
+        while not self.started:
+            try:
+                sock.bind(server_address)
+                self.started = True
+            except Exception:
+                print("Failed to start up socket .... retrying")
+                time.sleep(1)
 
         # Listen for incoming connections
         sock.listen(1)
