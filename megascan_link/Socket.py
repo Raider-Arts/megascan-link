@@ -40,7 +40,7 @@ class SocketThread(QtCore.QThread):
                 self._receivedData = io.StringIO()
                 self._connection, client_address = sock.accept()
                 print('connection from ', client_address)
-                # Receive the data in small chunks and retransmit it
+                # Receive the data in small chunks and gather it until there is no more
                 while True:
                     if self._tryCloseSocket(sock):
                         return
