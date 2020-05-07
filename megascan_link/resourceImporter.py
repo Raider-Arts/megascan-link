@@ -41,7 +41,7 @@ class ResourceImporter(object):
     def importFromData(self, data):
         self.data = data
         sdPackageMgr = utilities.getApp().getPackageMgr()
-        packages = sdPackageMgr.getPackages()
+        packages = sdPackageMgr.getUserPackages()
         parentWindow = utilities.getUiManager().getMainWindow()
         if packages.getSize() != 0:
             dialog = dialogs.SelectPackageDialog(packages, parent=parentWindow)
