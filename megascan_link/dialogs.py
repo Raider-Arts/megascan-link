@@ -6,20 +6,19 @@ from pathlib import Path
 import megascan_link
 from megascan_link import config
 from megascan_link.ui import settings_dialog
+from megascan_link.ui import import_dialog
 
 
-class SelectPackageDialog(QtWidgets.QDialog):
+class SelectPackageDialog(QtWidgets.QDialog, import_dialog.Ui_Dialog):
     returnValue = QtCore.Signal(object)
 
     def __init__(self,  packageList, parent=None,):
         super().__init__(parent=parent)
+        self.setupUi(self)
         self.selectedPackages = []
-        vLayout = QtWidgets.QVBoxLayout()
-        vLayout.addWidget(QtWidgets.QLabel("Select Packages to import to:")) 
-        hLayout = QtWidgets.QHBoxLayout() 
-        self.packageWidget = QtWidgets.QListWidget()
         self.packageWidget.setSelectionMode(QtWidgets.QAbstractItemView.ExtendedSelection)
         self.packageWidget.itemSelectionChanged.connect(self._getSelected)
+
         for package in packageList:
             name = package.getFilePath()
             if not name:
@@ -29,16 +28,9 @@ class SelectPackageDialog(QtWidgets.QDialog):
             listItem = QtWidgets.QListWidgetItem(name)
             listItem.setData(Qt.UserRole, package)
             self.packageWidget.addItem(listItem)
-        okBtn = QtWidgets.QPushButton('Ok')
-        okBtn.clicked.connect(lambda: self._returnFromDialog(False))
-        cancelBtn = QtWidgets.QPushButton('Cancel')
-        cancelBtn.clicked.connect(lambda: self._returnFromDialog(True))
-        hLayout.addStretch()
-        hLayout.addWidget(okBtn)
-        hLayout.addWidget(cancelBtn)
-        vLayout.addWidget(self.packageWidget)
-        vLayout.addLayout(hLayout)
-        self.setLayout(vLayout)
+
+        self.okBtn.clicked.connect(lambda: self._returnFromDialog(False))
+        self.cancelBtn.clicked.connect(lambda: self._returnFromDialog(True))
 
     def _getSelected(self):
         self.selectedPackages.clear()
