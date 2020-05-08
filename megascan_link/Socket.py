@@ -11,6 +11,7 @@ import time
 class SocketThread(QtCore.QThread):
     onDataReceived = QtCore.Signal(object)
     shouldClose = False
+    shouldRestart = False
     started = False
 
     def run(self):
@@ -20,15 +21,16 @@ class SocketThread(QtCore.QThread):
         # get config settings
         conf = config.ConfigSettings()
         # get the port number
-        port = int(conf.getConfigSetting("Socket","port"))
+        port = int(conf.getConfigSetting("Socket", "port"))
+        timeout = int(conf.getConfigSetting("Socket", "timeout"))
 
         # Create a TCP/IP socket
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         # sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        sock.settimeout(5)
+        sock.settimeout(timeout)
         #bind to an address and port
         server_address = ('localhost', port)
-        print('trying to start up socket on {} with port {}'.format(server_address[0], server_address[1]))
+        print('trying to start up socket on {} with port {} and timeout {}'.format(server_address[0], server_address[1], timeout))
         while not self.started:
             try:
                 sock.bind(server_address)
@@ -37,11 +39,13 @@ class SocketThread(QtCore.QThread):
                 print("Failed to start up socket .... retrying")
                 time.sleep(1)
 
+        if not self.started:
+            return
         # Listen for incoming connections
         sock.listen(1)
         while True:
             if self._tryCloseSocket(sock):
-                return
+                break
             # Wait for a connection
             try:
                 print('waiting for a connection')
@@ -51,7 +55,7 @@ class SocketThread(QtCore.QThread):
                 # Receive the data in small chunks and gather it until there is no more
                 while True:
                     if self._tryCloseSocket(sock):
-                        return
+                        break
                     data =  self._connection.recv(16)
                     if data:
                         self._receivedData.write(data.decode("utf-8"))
@@ -59,8 +63,7 @@ class SocketThread(QtCore.QThread):
                         print('no more data from ', client_address)
                         break
             except socket.timeout:
-                if self._tryCloseSocket(sock):
-                    return
+                print("socket timeout")
             else:
                 # Clean up the connection
                 jsonObj = json.loads(self._receivedData.getvalue())
@@ -69,7 +72,14 @@ class SocketThread(QtCore.QThread):
                 # print(json.dumps(jsonObj,indent=4))
                 if hasattr(self, '_connection'):
                     self._connection.close()
-                self._receivedData.close() 
+                self._receivedData.close()
+        self.shouldClose = False
+        if self.shouldRestart:
+            print("Restarting socket")
+            self.shouldRestart = False
+            self.started = False
+            self.run()
+        self.started = False
 
     def _tryCloseSocket(self, sock):
         if self.shouldClose:
@@ -78,6 +88,10 @@ class SocketThread(QtCore.QThread):
             return True
         else:
             return False
+
+    def restart(self):
+        self.shouldClose = True
+        self.shouldRestart = True
 
     def close(self):
         self.shouldClose = True
@@ -90,6 +104,7 @@ class SocketReceiver(QtCore.QObject):
 
     def onReceivedData(self, data):
         # This is called on the main thread. It is safe to use the sd API here.
-        print("Tick received in thread {} with data {}".format(QtCore.QThread.currentThread(), json.dumps(data, indent=4)))
+        # print("Tick received in thread {} with data {}".format(QtCore.QThread.currentThread(), json.dumps(data, indent=4)))
+        print("Data received")
         self._importer.importFromData(data)
         

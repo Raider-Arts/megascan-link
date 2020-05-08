@@ -20,7 +20,7 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
-        Dialog.resize(421, 418)
+        Dialog.resize(421, 302)
         self.gridLayout = QGridLayout(Dialog)
         self.gridLayout.setObjectName(u"gridLayout")
         self.verticalLayout = QVBoxLayout()
@@ -85,10 +85,10 @@ class Ui_Dialog(object):
         self.gridLayout_5.setObjectName(u"gridLayout_5")
         self.formLayout_3 = QFormLayout()
         self.formLayout_3.setObjectName(u"formLayout_3")
-        self.checkBox_2 = QCheckBox(self.groupBox)
-        self.checkBox_2.setObjectName(u"checkBox_2")
+        self.createGraph = QCheckBox(self.groupBox)
+        self.createGraph.setObjectName(u"createGraph")
 
-        self.formLayout_3.setWidget(0, QFormLayout.LabelRole, self.checkBox_2)
+        self.formLayout_3.setWidget(0, QFormLayout.LabelRole, self.createGraph)
 
 
         self.gridLayout_5.addLayout(self.formLayout_3, 1, 0, 1, 1)
@@ -102,10 +102,10 @@ class Ui_Dialog(object):
         self.gridLayout_4.setObjectName(u"gridLayout_4")
         self.formLayout_2 = QFormLayout()
         self.formLayout_2.setObjectName(u"formLayout_2")
-        self.checkBox = QCheckBox(self.groupBox_2)
-        self.checkBox.setObjectName(u"checkBox")
+        self.importLODs = QCheckBox(self.groupBox_2)
+        self.importLODs.setObjectName(u"importLODs")
 
-        self.formLayout_2.setWidget(0, QFormLayout.LabelRole, self.checkBox)
+        self.formLayout_2.setWidget(0, QFormLayout.LabelRole, self.importLODs)
 
 
         self.gridLayout_4.addLayout(self.formLayout_2, 0, 0, 1, 1)
@@ -152,7 +152,7 @@ class Ui_Dialog(object):
 
         self.retranslateUi(Dialog)
 
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(Dialog)
@@ -165,9 +165,9 @@ class Ui_Dialog(object):
         self.label_3.setText(QCoreApplication.translate("Dialog", u"Changing port number require a restart of the socket after the current timeout expires (so wait at least the current timeout to use the export on Bridge)", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.connTab), QCoreApplication.translate("Dialog", u"Connection", None))
         self.groupBox.setTitle(QCoreApplication.translate("Dialog", u"General", None))
-        self.checkBox_2.setText(QCoreApplication.translate("Dialog", u"Create New Graph", None))
+        self.createGraph.setText(QCoreApplication.translate("Dialog", u"Create New Graph", None))
         self.groupBox_2.setTitle(QCoreApplication.translate("Dialog", u"3D Asset", None))
-        self.checkBox.setText(QCoreApplication.translate("Dialog", u"Import LODs", None))
+        self.importLODs.setText(QCoreApplication.translate("Dialog", u"Import LODs", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QCoreApplication.translate("Dialog", u"Import", None))
         self.saveBtn.setText(QCoreApplication.translate("Dialog", u"Save", None))
         self.cancelBtn.setText(QCoreApplication.translate("Dialog", u"Cancel", None))

@@ -34,7 +34,7 @@ def getIcon():
 def openSettings():
     uiMgr = utilities.getUiManager()  
     mainWindow = uiMgr.getMainWindow()
-    Data.settingDialog = dialogs.SettingsDialog(parent=mainWindow)
+    Data.settingDialog = dialogs.SettingsDialog(Data.socketThread,parent=mainWindow)
     Data.settingDialog.show()
 
 # Plugin entry points.
