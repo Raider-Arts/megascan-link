@@ -8,11 +8,13 @@ from PySide2 import QtGui
 from PySide2 import QtWidgets
 from PySide2.QtCore import Qt
 import configparser
-from queue import Queue
+from queue import Queue 
 
 import megascan_link
 from megascan_link import sockets,config,utilities,dialogs,ui
 from megascan_link import resourceImporter as resImporter
+from megascan_link import icon as mIcon
+
 import importlib
 importlib.reload(megascan_link)
 importlib.reload(sockets)
@@ -21,6 +23,7 @@ importlib.reload(resImporter)
 importlib.reload(config)
 importlib.reload(dialogs)
 importlib.reload(ui)
+importlib.reload(mIcon)
 import ptvsd
 
 class Data(object):
@@ -28,9 +31,6 @@ class Data(object):
     toolbarAction = None
     toolbar = None
     settingDialog = None
-
-def getIcon():
-    return os.path.join(os.path.abspath(os.path.split(__file__)[0]), 'megascan_logo.png')
 
 def openSettings():
     uiMgr = utilities.getUiManager()  
@@ -61,7 +61,7 @@ def initializeSDPlugin():
     for toolbar in toolbars:
         if mainWindow.toolBarArea(toolbar) == Qt.ToolBarArea.TopToolBarArea:
             Data.toolbar = toolbar
-            icon = QtGui.QIcon(getIcon())
+            icon = QtGui.QIcon(mIcon.MegascanIcon.path)
             Data.toolbarAction = toolbar.addAction(icon, None)
             Data.toolbar = Data.toolbarAction.parentWidget()
             break
