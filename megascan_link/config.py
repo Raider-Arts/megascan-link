@@ -62,6 +62,12 @@ class ConfigSettings(object):
                 config.write(configFile)
 
     @classmethod
+    def checkIfOptionIsSet(cls, cat: str, prop: str) -> bool:
+        if cls.getConfigSetting(cat, prop).lower() in ["true", "yes", "y", "ok"]:
+            return True
+        return False
+
+    @classmethod
     def flush(cls):
         """Helper function used to write the content to file
         """	
