@@ -11,10 +11,10 @@ import configparser
 from queue import Queue
 
 import megascan_link
-from megascan_link import socket,config,utilities,dialogs,ui
+from megascan_link import sockets,config,utilities,dialogs,ui
 from megascan_link import resourceImporter as resImporter
 import importlib
-importlib.reload(socket)
+importlib.reload(sockets)
 importlib.reload(utilities)
 importlib.reload(resImporter)
 importlib.reload(config)

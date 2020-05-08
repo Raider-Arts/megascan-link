@@ -7,7 +7,7 @@ import megascan_link
 from megascan_link import config
 from megascan_link.ui import settings_dialog
 from megascan_link.ui import import_dialog
-from megascan_link import socket
+from megascan_link import sockets
 import importlib
 importlib.reload(settings_dialog)
 importlib.reload(import_dialog)
