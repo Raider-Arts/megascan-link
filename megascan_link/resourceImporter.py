@@ -38,6 +38,7 @@ class BitmapType(Enum):
     bump = SDUsage.sNew('bump', 'RGBA', 'Linear')
     gloss = SDUsage.sNew('glossiness', 'RGBA', 'Linear')
     specular = SDUsage.sNew('specular', 'RGBA', 'Linear')
+    ao = SDUsage.sNew('ambientOcclusion', 'R', 'Linear')
 
 class MegascanBitmap(object):
     def __init__(self, resource: SDResourceBitmap, path: str, usage: str, name = None):
