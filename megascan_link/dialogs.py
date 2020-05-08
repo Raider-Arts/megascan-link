@@ -53,7 +53,7 @@ class SelectPackageDialog(QtWidgets.QDialog, import_dialog.Ui_Dialog):
 
 class SettingsDialog(QtWidgets.QDialog, settings_dialog.Ui_Dialog):
 
-    def __init__(self, socketRef: socket.SocketThread, parent=None):
+    def __init__(self, socketRef: sockets.SocketThread, parent=None):
         self.config = config.ConfigSettings()
         self.needRestart = False
         self._sockRef = socketRef
