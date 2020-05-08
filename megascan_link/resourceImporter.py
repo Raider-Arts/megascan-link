@@ -109,6 +109,9 @@ class ResourceImporter(object):
                     bitmaps.append(MegascanBitmap(bitmapResource, bitmap['path'], bitmap["type"], bitmap['nameOverride']))
                 for mesh in imprt['meshList']:
                     SDResourceScene.sNewFromFile(folder, mesh['path'], EmbedMethod.Linked)
+                if conf.checkIfOptionIsSet("3D Asset", "importLODs"):
+                    for lod in imprt['lodList']:
+                        SDResourceScene.sNewFromFile(folder, lod['path'], EmbedMethod.Linked)
                 if conf.checkIfOptionIsSet("General","createGraph"):
                     self.createGraphWith(imprt['name'],bitmaps,package)
 
