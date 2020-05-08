@@ -66,9 +66,9 @@ def initializeSDPlugin():
             break
     Data.toolbarAction.triggered.connect(openSettings)
 
-    Data.socketThread = socket.SocketThread(parent=mainWindow)
+    Data.socketThread = sockets.SocketThread(parent=mainWindow)
     importer = resImporter.ResourceImporter()
-    receiver = socket.SocketReceiver(parent=mainWindow,importer=importer)
+    receiver = sockets.SocketReceiver(parent=mainWindow,importer=importer)
     print(Data.socketThread,receiver)
     Data.socketThread.onDataReceived.connect(receiver.onReceivedData, Qt.QueuedConnection)
     Data.socketThread.start()
