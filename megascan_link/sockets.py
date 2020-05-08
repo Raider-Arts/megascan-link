@@ -66,8 +66,10 @@ class SocketThread(QtCore.QThread):
                 print("socket timeout")
             else:
                 # Clean up the connection
-                jsonObj = json.loads(self._receivedData.getvalue())
-                self.onDataReceived.emit(jsonObj)
+                data = self._receivedData.getvalue()
+                if data:
+                    jsonObj = json.loads(self._receivedData.getvalue())
+                    self.onDataReceived.emit(jsonObj)
             finally:
                 # print(json.dumps(jsonObj,indent=4))
                 if hasattr(self, '_connection'):
@@ -104,7 +106,6 @@ class SocketReceiver(QtCore.QObject):
 
     def onReceivedData(self, data):
         # This is called on the main thread. It is safe to use the sd API here.
-        # print("Tick received in thread {} with data {}".format(QtCore.QThread.currentThread(), json.dumps(data, indent=4)))
-        print("Data received")
+        print("Data received in thread {} with data {}".format(QtCore.QThread.currentThread(), json.dumps(data, indent=4)))
         self._importer.importFromData(data)
         
