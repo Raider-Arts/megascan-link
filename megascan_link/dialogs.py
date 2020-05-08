@@ -12,7 +12,7 @@ import importlib
 importlib.reload(settings_dialog)
 importlib.reload(import_dialog)
 
-class SelectPackageDialog(QtWidgets.QDialog, import_dialog.Ui_Dialog):
+class SelectPackageDialog(QtWidgets.QDialog, import_dialog.Ui_Dialog): 
     returnValue = QtCore.Signal(object)
 
     def __init__(self,  packageList, parent=None,):
@@ -65,6 +65,8 @@ class SettingsDialog(QtWidgets.QDialog, settings_dialog.Ui_Dialog):
         self.timeoutNumber.setText(self.config.getConfigSetting("Socket", "timeout"))
         self.timeoutNumber.setValidator(QtGui.QIntValidator(0, 60, self))
         self.timeoutNumber.textChanged.connect(self.setNeedRestart)
+        self.createGraph.setCheckState(Qt.CheckState.Checked if self.config.checkIfOptionIsSet("General", "createGraph") else Qt.CheckState.Unchecked)
+        self.importLODs.setCheckState(Qt.CheckState.Checked if self.config.checkIfOptionIsSet("3D Asset","importLODs") else Qt.CheckState.Unchecked)
         self.saveBtn.pressed.connect(self.saveSettings)
         self.cancelBtn.pressed.connect(lambda: self.close())
     
@@ -75,9 +77,9 @@ class SettingsDialog(QtWidgets.QDialog, settings_dialog.Ui_Dialog):
     def saveSettings(self):
         self.config.updateConfigSetting("Socket", "port", self.portNumber.text(), False)
         self.config.updateConfigSetting("Socket", "timeout", self.timeoutNumber.text(), False)
-        createGraphState = True if self.createGraph.checkState == Qt.CheckState.Checked else False
+        createGraphState = True if self.createGraph.checkState() == Qt.CheckState.Checked else False
         self.config.updateConfigSetting("General", "creategraph", createGraphState, False)
-        importLODsState = True if self.importLODs.checkState == Qt.CheckState.Checked else False
+        importLODsState = True if self.importLODs.checkState() == Qt.CheckState.Checked else False
         self.config.updateConfigSetting("3D Asset", "importLODs", importLODsState, False)
         self.config.flush()
         self._sockRef.restart()
