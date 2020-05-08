@@ -1,11 +1,12 @@
 import sd
+import sd.api.sdapplication as sdapp
 import os
 
 def getAbsCurrentPath(append):
 	return os.path.join(os.path.abspath(os.path.split(__file__)[0]), append)
 
 
-def getApp():
+def getApp() -> sdapp.SDApplication:
 	"""Helper function to retrive the SDApplication
 	
 	Returns:

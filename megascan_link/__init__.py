@@ -14,6 +14,7 @@ import megascan_link
 from megascan_link import sockets,config,utilities,dialogs,ui
 from megascan_link import resourceImporter as resImporter
 import importlib
+importlib.reload(megascan_link)
 importlib.reload(sockets)
 importlib.reload(utilities)
 importlib.reload(resImporter)
