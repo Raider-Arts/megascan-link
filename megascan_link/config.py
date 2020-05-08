@@ -24,7 +24,9 @@ class ConfigSettings(object):
             flush {bool} -- If true it will immediatly update the file on disk (default: {True})
         """
         cls.checkConfigState()
-        cls.config[cat][prop] = value
+        if not cls.config.has_section(cat):
+            cls.config.add_section(cat)
+        cls.config[cat][prop] = str(value)
         if flush:
             with open(cls.path, 'w') as configFile:
                 cls.config.write(configFile)
@@ -43,7 +45,8 @@ class ConfigSettings(object):
             str -- the propriety value
         """
         cls.checkConfigState()
-        return cls.config[cat][prop]
+        # return cls.config[cat][prop]
+        return cls.config.get(cat,prop,fallback="")
     
     @classmethod
     def checkConfigState(cls):
