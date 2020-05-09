@@ -1,8 +1,12 @@
+"""Module containing classes for managing the config settings files or related
+"""
 import configparser
 import os
+from pathlib import Path
+
 import megascan_link
 from megascan_link import utilities as util
-from pathlib import Path
+
 
 class ConfigSettings(object):
     """Class that manages a config file
