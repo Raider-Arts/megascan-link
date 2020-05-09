@@ -37,7 +37,7 @@ class Data(object):
     settingDialog = None
 
 def openSettings():
-    """function fro setup and open the SettingsDialog
+    """function for setup and open the SettingsDialog
     """    
     uiMgr = utilities.getUiManager()  
     mainWindow = uiMgr.getMainWindow()
