@@ -16,9 +16,16 @@ Config module
 ----------------------------
 
 .. automodule:: megascan_link.config
-   :members:
+   :exclude-members: megascan_link.config.ConfigSettings
    :undoc-members:
    :show-inheritance:
+
+   .. autoclass:: megascan_link.config.ConfigSettings
+         :exclude-members: path
+         :members:
+         
+         .. autoattribute:: path
+               :annotation: ='./megascanlink.ini'
 
 Dialogs module
 -----------------------------
@@ -32,9 +39,16 @@ Icon module
 --------------------------
 
 .. automodule:: megascan_link.icon
-   :members:
+   :exclude-members: megascan_link.icon.MegascanIcon
    :undoc-members:
    :show-inheritance:
+
+   .. autoclass:: megascan_link.icon.MegascanIcon
+         :exclude-members: path
+         :members:
+         
+         .. autoattribute:: path
+               :annotation: ='./megascan_logo.png'
 
 ResourceImporter module
 --------------------------------------
