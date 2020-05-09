@@ -1,34 +1,32 @@
 """Contains classes to import the data from Quixel Bridge to Substance Designer
 """
+from enum import Enum
+from pathlib import Path
+from typing import List
 
+from PySide2 import QtCore, QtWidgets
+from PySide2.QtCore import Qt
 
+import megascan_link
 import sd
-from sd.api.sdpackage import SDPackage
-from sd.api.sdarray import SDArray
-from sd.api.sdtexture import SDTexture
+from megascan_link import config, dialogs
+from megascan_link import icon as mIcon
+from megascan_link import utilities
 from sd.api.sbs.sdsbscompgraph import SDSBSCompGraph
+from sd.api.sdarray import SDArray
+from sd.api.sdbasetypes import *
+from sd.api.sdpackage import SDPackage
+from sd.api.sdresourcebitmap import *
 from sd.api.sdresourcebitmap import SDResourceBitmap
-from sd.ui.graphgrid import GraphGrid
+from sd.api.sdresourcefolder import *
+from sd.api.sdresourcescene import *
+from sd.api.sdtexture import SDTexture
+from sd.api.sdtypeusage import SDTypeUsage
 from sd.api.sdusage import SDUsage
 from sd.api.sdvaluearray import SDValueArray
-from sd.api.sdtypeusage import SDTypeUsage
-from sd.api.sdvalueusage import SDValueUsage
 from sd.api.sdvaluestring import SDValueString
-from sd.api.sdbasetypes import *
-import megascan_link
-from megascan_link import utilities
-from megascan_link import dialogs
-from megascan_link import config
-from megascan_link import icon as mIcon
-from sd.api.sdresourcefolder import *
-from sd.api.sdresourcebitmap import *
-from sd.api.sdresourcescene import *
-from PySide2 import QtCore
-from PySide2.QtCore import Qt
-from PySide2 import QtWidgets
-from pathlib import Path
-from enum import Enum
-from typing import List
+from sd.api.sdvalueusage import SDValueUsage
+from sd.ui.graphgrid import GraphGrid
 
 class BitmapType(Enum):
     """Enum class used to have a quick access to the corrensponding SDUsage
@@ -190,5 +188,3 @@ class ResourceImporter(object):
             dialog = dialogs.SelectPackageDialog(packages, parent=parentWindow)
             dialog.returnValue.connect(self.processImportForPacakges)
             dialog.show()
-        
-
