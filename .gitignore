@@ -1,3 +1,6 @@
+#ignore sphinx build dir
+doc/_build/
+
 #ignore temp ini file
 megascan_link/*.ini
 
