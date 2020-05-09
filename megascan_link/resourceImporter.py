@@ -28,6 +28,10 @@ from enum import Enum
 from typing import List
 
 class BitmapType(Enum):
+    """Enum class used to have a quick access to the corrensponding SDUsage
+    Since the data from Quixel Bridge comes as a string we can get the corresponding SDUsage simply 
+    using BitmapType[str]
+    """
     albedo = SDUsage.sNew('baseColor', 'RGBA', 'sRGB')
     roughness = SDUsage.sNew('roughness', 'R', 'Linear')
     metalness = SDUsage.sNew('metallic', 'R', 'Linear')
@@ -41,7 +45,19 @@ class BitmapType(Enum):
     ao = SDUsage.sNew('ambientOcclusion', 'R', 'Linear')
 
 class MegascanBitmap(object):
-    def __init__(self, resource: SDResourceBitmap, path: str, usage: str, name = None):
+    """Wrapper class composed of the data coming from Quixel Bridge and the corrispective SDResourceBitmap
+    """    
+    def __init__(self, resource: SDResourceBitmap, path: str, usage: str, name=None):
+        """ MegascanBitmap Constructor
+        :param resource: The instanced SDResourceBitmap
+        :type resource: SDResourceBitmap
+        :param path: the respective path of the texture
+        :type path: str
+        :param usage: the texture usage 
+        :type usage: str
+        :param name: the name override, defaults to None
+        :type name: [type], optional
+        """        
         self.path = path
         self.resource = resource
         self.usage = BitmapType[usage]
@@ -53,22 +69,53 @@ class MegascanBitmap(object):
     def __str__(self):
         return "MegascanBitmap(\n\t usage: {} \n\t resource: {} \n\t name: {} \n\t path: {} \n)".format(self.usage, self.resource, self.name, self.path)
     
-    def getUsageArray(self):
+    def getUsageArray(self) -> SDValueArray:
+        """Method returning an SDValueArray with the usage of the texture
+
+        :return: SDValueArray with the usage of the texture
+        :rtype: SDValueArray
+        """        
         sdValueArray = SDValueArray.sNew(SDTypeUsage.sNew(), 0)
         sdValueUsage = SDValueUsage.sNew(self.usage.value)
         sdValueArray.pushBack(sdValueUsage)
         return sdValueArray
 
 class ResourceImporter(object):
+    """Class responsible of importing to Substance Designer all the meshes/bitmaps/data contained
+    in the payload from Quixel Bridge
+    """
+
+    #: Current data payload being processed
     data = None
 
-    def _isAlreadyImported(self, name, package):
+    def _isAlreadyImported(self, name: str, package: SDPackage) -> bool:
+        """Check if a Megascan asset is already imported by looking in all
+        the package children 
+
+        :param name: the Identifier to search for
+        :type name: str
+        :param package: the package to search
+        :type package: SDPackage
+        :return: True if found False elsewhere
+        :rtype: bool
+        """        
         for resource in package.getChildrenResources(False): 
             if resource.getIdentifier() == name:
                 return True 
         return False
 
     def createGraphWith(self, graphname: str, bitmaps: List[MegascanBitmap], package: SDPackage):
+        """Create a graph in the specified package using the specified bitmaps creating their respective outputs and finalally linking them
+        as a bonus we set the graph icon to the Megascan Logo :)
+
+        :param graphname: name of the new graph
+        :type graphname: str
+        :param bitmaps: List of MegascanBitmap to use in the graph
+        :type bitmaps: List[MegascanBitmap]
+        :param package: the package reference where to create the graph
+        :type package: SDPackage
+        """        
+
         cGridSize = GraphGrid.sGetFirstLevelSize()
         # =========================================================================
         # Create a new Substance Compositing Graph in this package
@@ -91,6 +138,16 @@ class ResourceImporter(object):
 
 
     def processImportForPacakges(self, packages):
+        """this is the actual method that performs the bitmaps/meshes import and graph creation tasks
+        it does it for every package that the user selected
+        this method uses the class attribute data and clears it when done and look 
+        up for the settings from the configuration file
+
+        :param packages: List of SDPackage where to import the currently processing data
+        :type packages: List[SDPackage]
+        """
+        if not self.data:
+            return
         conf = config.ConfigSettings()
         for package in packages:
             parentFolder = None
@@ -114,8 +171,14 @@ class ResourceImporter(object):
                         SDResourceScene.sNewFromFile(folder, lod['path'], EmbedMethod.Linked)
                 if conf.checkIfOptionIsSet("General","createGraph"):
                     self.createGraphWith(imprt['name'],bitmaps,package)
+        self.data = None
 
     def importFromData(self, data):
+        """Entry point from the data coming from the socked thread
+
+        :param data: Json Quixel Bridge data
+        :type data: dict
+        """        
         self.data = data
         sdPackageMgr = utilities.getApp().getPackageMgr()
         packages = sdPackageMgr.getUserPackages()
