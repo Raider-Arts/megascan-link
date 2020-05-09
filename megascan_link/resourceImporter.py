@@ -77,15 +77,15 @@ class ResourceImporter(object):
         print(mIcon.MegascanIcon.path) 
         megascanCompGraph.setIcon(SDTexture.sFromFile(mIcon.MegascanIcon.path)) 
 
-        for i, image in enumerate(reversed(bitmaps)): 
+        for i, image in enumerate(bitmaps): 
             # Create the Bitmap Instance Node
             megascanNodeBitmap = megascanCompGraph.newInstanceNode(image.resource)
-            megascanNodeBitmap.setPosition(float2(-2 * cGridSize, -(cGridSize + cGridSize/2) * i))
+            megascanNodeBitmap.setPosition(float2(-2 * cGridSize, (cGridSize + cGridSize/2) * i))
             # Crete the output node and set its usage based on the bitmap usage imported from Megascan
             megascanNodeOut = megascanCompGraph.newNode('sbs::compositing::output') 
             megascanNodeOut.setAnnotationPropertyValueFromId('usages', image.getUsageArray())
             megascanNodeOut.setAnnotationPropertyValueFromId('identifier', SDValueString.sNew(image.usage.name.capitalize())) 
-            megascanNodeOut.setPosition(float2(-0.5 * cGridSize, -(cGridSize + cGridSize/2) * i))
+            megascanNodeOut.setPosition(float2(-0.5 * cGridSize, (cGridSize + cGridSize/2) * i))
             # Perform the connection
             megascanNodeBitmap.newPropertyConnectionFromId('unique_filter_output', megascanNodeOut, 'inputNodeOutput')
 
