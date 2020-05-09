@@ -1,23 +1,28 @@
-from PySide2 import QtCore
-import megascan_link
-from megascan_link import config
-import socket
-import sys
+"""Module containing classes for managing the comunincation with the socket thread 
+and the main thread (in which we can use the SDAPI)
+"""
 import io
 import json
-import ptvsd
+import socket
+import sys
 import time
 
+from PySide2 import QtCore
+
+import megascan_link
+from megascan_link import config
+
+
 class SocketThread(QtCore.QThread):
+    """Core plugin class that manages a socket process for receiving TCP packets from
+    Quixel Bridge
+    """    
     onDataReceived = QtCore.Signal(object)
     shouldClose = False
     shouldRestart = False
     started = False
 
     def run(self):
-        # ptvsd.enable_attach()
-        # ptvsd.wait_for_attach()
-        # ptvsd.break_into_debugger()
         # get config settings
         conf = config.ConfigSettings()
         # get the port number
@@ -108,4 +113,3 @@ class SocketReceiver(QtCore.QObject):
         # This is called on the main thread. It is safe to use the sd API here.
         print("Data received in thread {} with data {}".format(QtCore.QThread.currentThread(), json.dumps(data, indent=4)))
         self._importer.importFromData(data)
-        
