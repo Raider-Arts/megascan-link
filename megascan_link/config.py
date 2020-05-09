@@ -7,7 +7,7 @@ from pathlib import Path
 class ConfigSettings(object):
     """Class that manages a config file
     """    
-    #: Contains the path to the megascanlink config file (root dir of module)
+    #: Contains the path to the megascanlink.ini config file (root dir of module)
     path = Path(util.getAbsCurrentPath('megascanlink.ini'))
     #: Config parser class instance
     config = configparser.ConfigParser()

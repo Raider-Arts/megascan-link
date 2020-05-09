@@ -1,3 +1,6 @@
+"""Contains classes to import the data from Quixel Bridge to Substance Designer
+"""
+
 
 import sd
 from sd.api.sdpackage import SDPackage
@@ -174,10 +177,10 @@ class ResourceImporter(object):
         self.data = None
 
     def importFromData(self, data):
-        """Entry point from the data coming from the socked thread
+        """**Entry point** for the data coming from the socked thread
 
         :param data: Json Quixel Bridge data
-        :type data: dict
+        :type data: List[dict]
         """        
         self.data = data
         sdPackageMgr = utilities.getApp().getPackageMgr()
