@@ -1,10 +1,10 @@
-megascan\_link.ui package
+Ui package
 =========================
 
 Submodules
 ----------
 
-megascan\_link.ui.import\_dialog module
+Import\_dialog module
 ---------------------------------------
 
 .. automodule:: megascan_link.ui.import_dialog
@@ -12,7 +12,7 @@ megascan\_link.ui.import\_dialog module
    :undoc-members:
    :show-inheritance:
 
-megascan\_link.ui.settings\_dialog module
+Settings\_dialog module
 -----------------------------------------
 
 .. automodule:: megascan_link.ui.settings_dialog

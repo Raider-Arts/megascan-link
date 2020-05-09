@@ -1,4 +1,4 @@
-megascan_link
+Megascan Link
 =============
 
 .. toctree::

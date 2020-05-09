@@ -1,4 +1,4 @@
-megascan\_link package
+Megascan Link package
 ======================
 
 Subpackages
@@ -12,7 +12,7 @@ Subpackages
 Submodules
 ----------
 
-megascan\_link.config module
+Config module
 ----------------------------
 
 .. automodule:: megascan_link.config
@@ -20,7 +20,7 @@ megascan\_link.config module
    :undoc-members:
    :show-inheritance:
 
-megascan\_link.dialogs module
+Dialogs module
 -----------------------------
 
 .. automodule:: megascan_link.dialogs
@@ -28,7 +28,7 @@ megascan\_link.dialogs module
    :undoc-members:
    :show-inheritance:
 
-megascan\_link.icon module
+Icon module
 --------------------------
 
 .. automodule:: megascan_link.icon
@@ -36,7 +36,7 @@ megascan\_link.icon module
    :undoc-members:
    :show-inheritance:
 
-megascan\_link.resourceImporter module
+ResourceImporter module
 --------------------------------------
 
 .. automodule:: megascan_link.resourceImporter
@@ -44,7 +44,7 @@ megascan\_link.resourceImporter module
    :undoc-members:
    :show-inheritance:
 
-megascan\_link.sockets module
+Sockets module
 -----------------------------
 
 .. automodule:: megascan_link.sockets
@@ -52,7 +52,7 @@ megascan\_link.sockets module
    :undoc-members:
    :show-inheritance:
 
-megascan\_link.utilities module
+Utilities module
 -------------------------------
 
 .. automodule:: megascan_link.utilities
