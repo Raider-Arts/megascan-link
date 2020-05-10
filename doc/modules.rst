@@ -1,13 +1,3 @@
-Developer Docs
-===============
-
-.. toctree::
-   :maxdepth: 4
-
-   megascan_link
-
-
-
 Plugin Guide
 =============
 
@@ -15,3 +5,11 @@ Plugin Guide
    :maxdepth: 4
 
    howto
+
+Developer Docs
+===============
+
+.. toctree::
+   :maxdepth: 4
+
+   megascan_link
