@@ -8,7 +8,7 @@ You can find it in the [realease](https://github.com/Raider-Arts/megascan-link/r
 
 or in the Substance
 
-##### **Build types:**
+##### Build types
 - Development Buid
     > This build is always updated as soon a commit is pushed on the master branch
     ```eval_rst
