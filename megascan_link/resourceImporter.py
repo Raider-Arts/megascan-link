@@ -3,13 +3,14 @@
 from enum import Enum
 from pathlib import Path
 from typing import List
+from logging import DEBUG
 
 from PySide2 import QtCore, QtWidgets
 from PySide2.QtCore import Qt
 
 import megascan_link
 import sd
-from megascan_link import config, dialogs
+from megascan_link import config, dialogs, log
 from megascan_link import icon as mIcon
 from megascan_link import utilities
 from sd.api.sbs.sdsbscompgraph import SDSBSCompGraph
@@ -81,10 +82,13 @@ class MegascanBitmap(object):
         sdValueArray.pushBack(sdValueUsage)
         return sdValueArray
 
-class ResourceImporter(object):
+class ResourceImporter(QtCore.QObject):
     """Class responsible of importing to Substance Designer all the meshes/bitmaps/data contained
     in the payload from Quixel Bridge
     """
+
+    def __init__(self, parent=None):
+        super().__init__(parent=parent)
 
     #: Current data payload being processed
     data = None
@@ -122,7 +126,6 @@ class ResourceImporter(object):
         # Create a new Substance Compositing Graph in this package
         megascanCompGraph = SDSBSCompGraph.sNew(package)
         megascanCompGraph.setIdentifier(graphname)
-        print(mIcon.MegascanIcon.path) 
         megascanCompGraph.setIcon(SDTexture.sFromFile(mIcon.MegascanIcon.path)) 
 
         for i, image in enumerate(bitmaps): 
@@ -179,8 +182,9 @@ class ResourceImporter(object):
 
         :param data: Json Quixel Bridge data
         :type data: List[dict]
-        """        
+        """
         self.data = data
+        log.LoggerLink.Log(data, DEBUG)
         sdPackageMgr = utilities.getApp().getPackageMgr()
         packages = sdPackageMgr.getUserPackages()
         parentWindow = utilities.getUiManager().getMainWindow()

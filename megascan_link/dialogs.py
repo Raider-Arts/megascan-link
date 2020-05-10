@@ -5,14 +5,15 @@ and then converted to python code using the buildDialogs.py script
 """
 
 import importlib
+from logging import DEBUG
 from pathlib import Path
 
 from PySide2 import QtCore, QtGui, QtWidgets
 from PySide2.QtCore import Qt
 
 import megascan_link
-from megascan_link import config, sockets
-from megascan_link.ui import import_dialog, settings_dialog
+from megascan_link import config, sockets, log
+from megascan_link.ui import import_dialog, settings_dialog 
 
 importlib.reload(settings_dialog)
 importlib.reload(import_dialog)
@@ -53,19 +54,20 @@ class SelectPackageDialog(QtWidgets.QDialog, import_dialog.Ui_Dialog):
     def _getSelected(self):
         """Internal method used to update the currently selected packages
         """        
+        logger = log.LoggerLink()
         self.selectedPackages.clear()
         packages = self.packageWidget.selectedItems()
-        print(self.packageWidget.selectedItems())
+        logger.Log("selected items in SelectPackage dialog: {}".format(packages), DEBUG)
         for package in packages:
             self.selectedPackages.append(package.data(Qt.UserRole))
-            print(package.data(Qt.UserRole))
+
     
     def _returnFromDialog(self, isCancel):
         """Internal method used to dismiss the dialog
 
         :param isCancel: True or False depending if the user clicked *Import* or *Cancel* on the dialog
         :type isCancel: bool
-        """        
+        """     
         if isCancel:
             self.close()
         else:
@@ -97,8 +99,9 @@ class SettingsDialog(QtWidgets.QDialog, settings_dialog.Ui_Dialog):
     def _setNeedRestart(self, changedStr):
         """Internal method to set the need restart flag which is later passed to the socket thread
         when the dialog is closed
-        """        
-        print("Port or Timeout changed socket need to restart")
+        """       
+        logger = log.LoggerLink() 
+        logger.Log("Port or Timeout changed socket need to restart", DEBUG)
         self.needRestart = True
 
     def saveSettings(self):
