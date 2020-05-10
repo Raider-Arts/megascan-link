@@ -6,23 +6,56 @@ import json
 import socket
 import sys
 import time
+from logging import DEBUG, INFO, WARNING
 
 from PySide2 import QtCore
 
 import megascan_link
-from megascan_link import config
+from megascan_link import config, log
 
 
 class SocketThread(QtCore.QThread):
     """Core plugin class that manages a socket process for receiving TCP packets from
     Quixel Bridge
-    """    
+    """
+    #: Signal that is fired whenever a packet is retrived over the socket
+    #:
+    #: :type: QtCore.Signal
+    #: :param object: json dictionary containing the data
+    #: :type ojbect: dict
     onDataReceived = QtCore.Signal(object)
+    #: flag that indicates that the socket should stop in the next timeout frame
+    #:
+    #: see :meth:`~megascan_link.sockets.SocketThread.stop`
+    #: 
+    #: .. warning::
+    #:      dont use this flag directly use instead the :meth:`~megascan_link.sockets.SocketThread.stop` methods
     shouldClose = False
+    #: flag that indicates that a restart is been requested, the restart is processed in the next timeout frame,
+    #: it is cleared (False) when the restart happen
+    #:
+    #: used for example if you want to change the listening port or the timeout duration
+    #:
+    #: see :meth:`~megascan_link.sockets.SocketThread.restart`
+    #:
+    #: .. warning::
+    #:      dont use this flag directly use instead the :meth:`~megascan_link.sockets.SocketThread.restart` method instead
     shouldRestart = False
+    #: variables that idicates if the socket has been started
+    #:
+    #: but it is not guarantee that it is listening 
     started = False
 
     def run(self):
+        """This is the method that manages the socket lifetime process
+
+        To interact with the socket use the :meth:`~megascan_link.sockets.SocketThread.stop` and :meth:`~megascan_link.sockets.SocketThread.restart` method instead
+
+        While this method is running the associated thread is kept alive **closing** the socket without requesting a **restart** will make this thread close too
+
+        The socket is listening on the port specified on the config file and it is restarted every time the timeout duration expires (also setted from the config file)
+        """        
+        logger = log.LoggerLink()
         # get config settings
         conf = config.ConfigSettings()
         # get the port number
@@ -35,13 +68,13 @@ class SocketThread(QtCore.QThread):
         sock.settimeout(timeout)
         #bind to an address and port
         server_address = ('localhost', port)
-        print('trying to start up socket on {} with port {} and timeout {}'.format(server_address[0], server_address[1], timeout))
+        logger.Log('trying to start up socket on {} with port {} and timeout {}'.format(server_address[0], server_address[1], timeout), INFO)
         while not self.started:
             try:
                 sock.bind(server_address)
                 self.started = True
             except Exception:
-                print("Failed to start up socket .... retrying")
+                logger.Log("Failed to start up socket .... retrying",INFO)
                 time.sleep(1)
 
         if not self.started:
@@ -53,10 +86,10 @@ class SocketThread(QtCore.QThread):
                 break
             # Wait for a connection
             try:
-                print('waiting for a connection')
+                logger.Log('waiting for a connection',DEBUG)
                 self._receivedData = io.StringIO()
                 self._connection, client_address = sock.accept()
-                print('connection from ', client_address)
+                logger.Log('connection from {}'.format(client_address), DEBUG)
                 # Receive the data in small chunks and gather it until there is no more
                 while True:
                     if self._tryCloseSocket(sock):
@@ -65,10 +98,10 @@ class SocketThread(QtCore.QThread):
                     if data:
                         self._receivedData.write(data.decode("utf-8"))
                     else:
-                        print('no more data from ', client_address)
+                        logger.Log('no more data from {}'.format(client_address), DEBUG)
                         break
             except socket.timeout:
-                print("socket timeout")
+                logger.Log("socket timeout", DEBUG)
             else:
                 # Clean up the connection
                 data = self._receivedData.getvalue()
@@ -76,40 +109,49 @@ class SocketThread(QtCore.QThread):
                     jsonObj = json.loads(self._receivedData.getvalue())
                     self.onDataReceived.emit(jsonObj)
             finally:
-                # print(json.dumps(jsonObj,indent=4))
                 if hasattr(self, '_connection'):
                     self._connection.close()
                 self._receivedData.close()
         self.shouldClose = False
         if self.shouldRestart:
-            print("Restarting socket")
+            logger.Log("Restarting socket", INFO)
             self.shouldRestart = False
             self.started = False
             self.run()
         self.started = False
 
-    def _tryCloseSocket(self, sock):
+    def _tryCloseSocket(self, sock) -> bool:
+        """Internal method used for testing if the socket should be closed
+        based on the :attr:`~megascan_link.sockets.SocketThread.shouldClose` flag
+        
+        if it possible the socket is closed
+
+        :param sock: socked to close
+        :type sock: sock.Socket
+        :return: True if the socket is being closed, False otherwise
+        :rtype: bool
+        """
         if self.shouldClose:
-            print("closing socket")
+            logger = log.LoggerLink()
+            logger.Log("closing socket",INFO)
             sock.close()
             return True
         else:
             return False
 
     def restart(self):
+        """Set the needed flags to perform a socket restart
+
+        .. note::
+            The restart is performed only after the timeout duration
+        """        
         self.shouldClose = True
         self.shouldRestart = True
 
     def close(self):
+        """Set the needed flags to close the socket
+
+        .. note::
+            The close operatiob is performed only after the timeout duration
+        """       
         self.shouldClose = True
-
-
-class SocketReceiver(QtCore.QObject):
-    def __init__(self, parent=None, importer=None):
-        self._importer = importer
-        super(SocketReceiver, self).__init__(parent)
-
-    def onReceivedData(self, data):
-        # This is called on the main thread. It is safe to use the sd API here.
-        print("Data received in thread {} with data {}".format(QtCore.QThread.currentThread(), json.dumps(data, indent=4)))
-        self._importer.importFromData(data)
