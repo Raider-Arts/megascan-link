@@ -12,6 +12,7 @@
 #
 import os
 import sys
+from recommonmark.transform import AutoStructify
 sys.path.insert(0, os.path.abspath('..'))
 
 
@@ -27,7 +28,10 @@ author = 'Luca Faggion'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ['sphinx.ext.autodoc',"sphinx_rtd_theme"]
+extensions = ['sphinx.ext.autodoc', "sphinx_rtd_theme", 'recommonmark']
+
+# Source files suffixes
+source_suffix = ['.rst', '.md']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -52,3 +56,18 @@ html_theme = 'sphinx_rtd_theme'
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+#Logo
+html_logo = '../megascan_link/megascan_logo.png'
+
+#css style
+html_css_files = ['style.css']
+
+
+# -- Autostructify -------------------------------------------------
+
+def setup(app):
+    app.add_config_value('recommonmark_config', {
+            'enable_eval_rst': True
+            }, True)
+    app.add_transform(AutoStructify)
