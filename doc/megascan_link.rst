@@ -12,6 +12,23 @@ Subpackages
 Submodules
 ----------
 
+Sockets module
+-----------------------------
+
+.. automodule:: megascan_link.sockets
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ResourceImporter module
+--------------------------------------
+
+.. automodule:: megascan_link.resourceImporter
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
 Config module
 ----------------------------
 
@@ -50,22 +67,6 @@ Icon module
          .. autoattribute:: path
                :annotation: ='./megascan_logo.png'
 
-ResourceImporter module
---------------------------------------
-
-.. automodule:: megascan_link.resourceImporter
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Sockets module
------------------------------
-
-.. automodule:: megascan_link.sockets
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 Utilities module
 -------------------------------
 
@@ -74,6 +75,14 @@ Utilities module
    :undoc-members:
    :show-inheritance:
 
+
+Log module
+-------------------------------
+
+.. automodule:: megascan_link.log
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Module contents
 ---------------
