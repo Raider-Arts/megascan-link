@@ -6,3 +6,7 @@
 .icon {
     width: 100%;
 }
+
+.wy-table-responsive table td {
+    white-space: unset;
+}
