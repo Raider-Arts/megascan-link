@@ -28,7 +28,7 @@ author = 'Luca Faggion'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ['sphinx.ext.autodoc', "sphinx_rtd_theme", 'recommonmark']
+extensions = ['sphinx.ext.autodoc', "sphinx_rtd_theme", 'recommonmark','sphinx_markdown_tables']
 
 # Source files suffixes
 source_suffix = ['.rst', '.md']

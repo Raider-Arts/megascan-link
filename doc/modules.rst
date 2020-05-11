@@ -12,4 +12,5 @@ Developer Docs
 .. toctree::
    :maxdepth: 4
 
+   prerequisites
    megascan_link
