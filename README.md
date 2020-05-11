@@ -12,10 +12,12 @@ For a complete guide on all the options of the plugin refere to the [How to use 
     > :information_source: **Refere to the official doc for installing a [Plugin Package](https://docs.substance3d.com/sddoc/plugins-packages-182257045.html)**
 
  - Select a Megascan Asset you want to export then setup Quixel Bridge to the correct export option and then click Export (Default plugin port is **24981**)
+
     ![bridge export](doc/_static/megascan_setup.gif)
 
  - Import the currently exporting Megascan Asset to the selected Substance Designer packages:
-    ![deisgner import](doc/_static/designer_import.gif)
+
+    ![designer import](doc/_static/designer_import.gif)
 
 ## Want to contribute?
 If you are willing to contribute you should start by [reading the dev docs](http://todoaddlink).
