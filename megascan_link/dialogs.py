@@ -12,7 +12,7 @@ from PySide2 import QtCore, QtGui, QtWidgets
 from PySide2.QtCore import Qt
 
 import megascan_link
-from megascan_link import config, sockets, log
+from megascan_link import config, sockets, log, icon
 from megascan_link.ui import import_dialog, settings_dialog 
 
 importlib.reload(settings_dialog)
@@ -76,7 +76,7 @@ class SelectPackageDialog(QtWidgets.QDialog, import_dialog.Ui_Dialog):
 
 
 class SettingsDialog(QtWidgets.QDialog, settings_dialog.Ui_Dialog):
-    """Dialog displayed to the user for editing the plugin settingss
+    """Dialog displayed to the user for editing the plugin settings
     """    
 
     def __init__(self, socketRef: sockets.SocketThread, parent=None):
@@ -85,16 +85,19 @@ class SettingsDialog(QtWidgets.QDialog, settings_dialog.Ui_Dialog):
         self._sockRef = socketRef
         super().__init__(parent=parent)
         self.setupUi(self)
+
         self.portNumber.setText(self.config.getConfigSetting("Socket", "port"))
         self.portNumber.setValidator(QtGui.QIntValidator(self))
         self.portNumber.textChanged.connect(self._setNeedRestart)
         self.timeoutNumber.setText(self.config.getConfigSetting("Socket", "timeout"))
         self.timeoutNumber.setValidator(QtGui.QIntValidator(0, 60, self))
         self.timeoutNumber.textChanged.connect(self._setNeedRestart)
+        self.showlog.setCheckState(Qt.CheckState.Checked if self.config.checkIfOptionIsSet("General", "outputConsole") else Qt.CheckState.Unchecked)
         self.createGraph.setCheckState(Qt.CheckState.Checked if self.config.checkIfOptionIsSet("General", "createGraph") else Qt.CheckState.Unchecked)
         self.importLODs.setCheckState(Qt.CheckState.Checked if self.config.checkIfOptionIsSet("3D Asset","importLODs") else Qt.CheckState.Unchecked)
         self.saveBtn.pressed.connect(self.saveSettings)
         self.cancelBtn.pressed.connect(lambda: self.close())
+        self.helpIcon.setPixmap(QtGui.QPixmap(icon.getIcon('help_icon.png')))
     
     def _setNeedRestart(self, changedStr):
         """Internal method to set the need restart flag which is later passed to the socket thread
@@ -113,6 +116,8 @@ class SettingsDialog(QtWidgets.QDialog, settings_dialog.Ui_Dialog):
         self.config.updateConfigSetting("General", "creategraph", createGraphState, False)
         importLODsState = True if self.importLODs.checkState() == Qt.CheckState.Checked else False
         self.config.updateConfigSetting("3D Asset", "importLODs", importLODsState, False)
+        showLogConsoleState = True if self.showlog.checkState() == Qt.CheckState.Checked else False
+        self.config.updateConfigSetting("General", "outputConsole", showLogConsoleState, False)
         self.config.flush()
         if self.needRestart:
             self._sockRef.restart()
