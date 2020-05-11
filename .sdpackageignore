@@ -2,10 +2,23 @@
 # List of files ignored when packaging the plugin
 ##################################################
 
+#Ignore git files
+.git/
+.gitignore
+
+#Ignore vscode files
+.vscode/
+
+#Ignore temporary folders
+temp/
+
+#Ignore documentation folder
+doc/
+
 #Ignore readmes
 *.md
 
-#Ingnore ui designes
+#Ingnore ui designs
 uiDesign/
 
 # Ignore the packaging script.
@@ -18,3 +31,8 @@ build/
 *.pyc
 __pycache__
 
+#Ignore ini config files
+*.ini
+
+#Ignore log files
+*.log
