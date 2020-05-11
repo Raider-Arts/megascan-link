@@ -1,5 +1,5 @@
 # Megascan Link Plugin ![designerversion](https://img.shields.io/badge/designer%20version-2019.3%20or%20newer-green)
-This plugin enable the import of Megascan Asset using the export feature of [Quixel Bridge](https://quixel.com/bridge)
+This plugin enable the import of Megascan Assets using the export feature of [Quixel Bridge](https://quixel.com/bridge)
 
 ## Quick start guide
 
@@ -23,8 +23,9 @@ For a complete guide on all the options of the plugin refere to the [How to use 
 If you are willing to contribute you should start by [reading the dev docs](http://todoaddlink).
 
 **Done it?** allright it's time to clone this repository and start coding !!
+
 After you made your changes dont forget to test them!! 
 
-And please i'm trying to keep this plugin without any external dependecies for the ease of usage for everyone! :) so try to rely on what the already build-in python installation of Substance Designer has to offer
+And please i'm trying to keep this plugin without any external dependecies for the ease of usage for everyone! so try to rely on what the already build-in python installation of Substance Designer has to offer
 
-I hope this plugin help you. 
+I hope this plugin helped you. 
