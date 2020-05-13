@@ -5,6 +5,7 @@
 #Ignore git files
 .git/
 .gitignore
+.github/
 
 #Ignore vscode files
 .vscode/
