@@ -19,6 +19,11 @@ For a complete guide on all the options of the plugin refere to the [How to use 
 
     ![designer import](doc/_static/designer_import.gif)
 
+## Full Import Example
+In this short video you can see how to import a Megascan Asset from Quixel Bridge to Substance Designer using the Plugin
+
+![import example](doc/_static/import_example.gif)
+
 ## Want to contribute?
 If you are willing to contribute you should start by [reading the dev docs](http://todoaddlink).
 
