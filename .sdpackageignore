@@ -2,6 +2,10 @@
 # List of files ignored when packaging the plugin
 ##################################################
 
+#ignore readthedocs requisites
+.readthedocs.yml
+requirements.txt
+
 #Ignore git files
 .git/
 .gitignore
