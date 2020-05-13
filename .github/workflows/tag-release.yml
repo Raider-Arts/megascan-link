@@ -8,7 +8,7 @@ on:
 
 jobs:
   pre-release:
-    name: "Pre Release"
+    name: "Tag Release"
     runs-on: "ubuntu-latest"
 
     steps:
