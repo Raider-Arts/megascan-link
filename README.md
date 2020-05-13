@@ -3,7 +3,7 @@ This plugin enable the import of Megascan Assets using the export feature of [Qu
 
 ## Quick start guide
 
-For a complete guide on all the options of the plugin refere to the [How to use documentation](http://todoaddlink).
+For a complete guide on all the options of the plugin refere to the [How to use documentation](https://megascan-link.readthedocs.io/en/latest/?badge=latest).
 
  - Download the plugin from the [Release Page](https://github.com/Raider-Arts/megascan-link/releases) or the [Substance Share Platform](http://todoaddlink) (plugin currently in review state) or [build it yourself](https://megascan-link.readthedocs.io/en/latest/prerequisites.html)
 
