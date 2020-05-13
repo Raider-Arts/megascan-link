@@ -1,4 +1,4 @@
-# Megascan Link Plugin ![designerversion](https://img.shields.io/badge/designer%20version-2019.3%20or%20newer-green)
+# Megascan Link Plugin ![designerversion](https://img.shields.io/badge/designer%20version-2019.3%20or%20newer-green) ![tag-Release](https://github.com/Raider-Arts/megascan-link/workflows/tag-Release/badge.svg) ![pre-release](https://github.com/Raider-Arts/megascan-link/workflows/pre-release/badge.svg)
 This plugin enable the import of Megascan Assets using the export feature of [Quixel Bridge](https://quixel.com/bridge)
 
 ## Quick start guide
