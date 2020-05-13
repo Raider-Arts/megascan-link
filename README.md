@@ -27,10 +27,10 @@ In this short video you can see how to import a Megascan Asset from Quixel Bridg
 ## Want to contribute?
 If you are willing to contribute you should start by [reading the dev docs](https://megascan-link.readthedocs.io/en/latest/).
 
-**Done it?** allright it's time to clone this repository and start coding !!
+**Done it?** all right it's time to clone this repository and start coding !!
 
-After you made your changes dont forget to test them!! 
+After you made your changes don't forget to test them!! 
 
-And please i'm trying to keep this plugin without any external dependecies for the ease of usage for everyone! so try to rely on what the already build-in python installation of Substance Designer has to offer
+And please i'm trying to keep this plugin without any external dependencies for the ease of usage for everyone! so try to rely on what the already build-in python installation of Substance Designer has to offer
 
 I hope this plugin helped you. 
