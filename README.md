@@ -1,11 +1,11 @@
-# Megascan Link Plugin ![designerversion](https://img.shields.io/badge/designer%20version-2019.3%20or%20newer-green) ![tag-Release](https://github.com/Raider-Arts/megascan-link/workflows/tag-Release/badge.svg) ![pre-release](https://github.com/Raider-Arts/megascan-link/workflows/pre-release/badge.svg)
+# Megascan Link Plugin ![designerversion](https://img.shields.io/badge/designer%20version-2019.3%20or%20newer-green) ![tag-Release](https://github.com/Raider-Arts/megascan-link/workflows/tag-Release/badge.svg) ![pre-release](https://github.com/Raider-Arts/megascan-link/workflows/pre-release/badge.svg) [![Documentation Status](https://readthedocs.org/projects/megascan-link/badge/?version=latest)](https://megascan-link.readthedocs.io/en/latest/?badge=latest)
 This plugin enable the import of Megascan Assets using the export feature of [Quixel Bridge](https://quixel.com/bridge)
 
 ## Quick start guide
 
 For a complete guide on all the options of the plugin refere to the [How to use documentation](http://todoaddlink).
 
- - Download the plugin from the [Release Page](https://github.com/Raider-Arts/megascan-link/releases) or the [Substance Share Platform](http://todoaddlink) (plugin currently in review state) or [build it yourself](http://todoaddlink)
+ - Download the plugin from the [Release Page](https://github.com/Raider-Arts/megascan-link/releases) or the [Substance Share Platform](http://todoaddlink) (plugin currently in review state) or [build it yourself](https://megascan-link.readthedocs.io/en/latest/prerequisites.html)
 
  - Install it in Substance Designer using the Plugin manager, you can find it under ``Tools > Plugin Manager..`` then click ``install`` and navigate to the path were you previously downloaded it
  
@@ -25,7 +25,7 @@ In this short video you can see how to import a Megascan Asset from Quixel Bridg
 ![import example](doc/_static/import_example.gif)
 
 ## Want to contribute?
-If you are willing to contribute you should start by [reading the dev docs](http://todoaddlink).
+If you are willing to contribute you should start by [reading the dev docs](https://megascan-link.readthedocs.io/en/latest/).
 
 **Done it?** allright it's time to clone this repository and start coding !!
 
