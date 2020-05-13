@@ -1,0 +1,34 @@
+---
+name: "pre-release"
+
+on:
+  push:
+    branches:
+      - "master"
+
+jobs:
+  pre-release:
+    name: "Pre Release"
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: "Set release name"
+        run: |
+          export RELEASE_NAME="${{ github.event.repository.name }}-dev"
+          echo "::set-env name=NAME::$RELEASE_NAME"
+        
+      - name: "Build"
+        if: success()
+        run: |
+            cd $GITHUB_WORKSPACE
+            python makepackage.py
+            
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        if: success()
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Development Build"
+          files: build/*
