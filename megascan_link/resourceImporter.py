@@ -62,7 +62,13 @@ class MegascanBitmap(object):
         """        
         self.path = path
         self.resource = resource
-        self.usage = BitmapType[usage]
+
+        # check if we have a preset for the usage of the texture
+        # if not we create a default one with RGBA and no color space
+        if hasattr(BitmapType, usage):
+            self.usage = BitmapType[usage]
+        else:
+            self.usage = SDUsage.sNew(usage, 'RGBA', '')
         if not name:
             self.name = Path(self.path).stem
         else:
@@ -135,7 +141,8 @@ class ResourceImporter(QtCore.QObject):
             # Crete the output node and set its usage based on the bitmap usage imported from Megascan
             megascanNodeOut = megascanCompGraph.newNode('sbs::compositing::output') 
             megascanNodeOut.setAnnotationPropertyValueFromId('usages', image.getUsageArray())
-            megascanNodeOut.setAnnotationPropertyValueFromId('identifier', SDValueString.sNew(image.usage.name.capitalize())) 
+            megascanNodeOut.setAnnotationPropertyValueFromId('identifier', SDValueString.sNew(image.usage.name.capitalize()))
+            megascanNodeOut.setAnnotationPropertyValueFromId('group', SDValueString.sNew('Material'))
             megascanNodeOut.setPosition(float2(-0.5 * cGridSize, (cGridSize + cGridSize/2) * i))
             # Perform the connection
             megascanNodeBitmap.newPropertyConnectionFromId('unique_filter_output', megascanNodeOut, 'inputNodeOutput')
