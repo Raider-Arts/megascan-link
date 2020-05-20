@@ -76,7 +76,7 @@ def initializeSDPlugin():
     initConfig["Socket"] = {"port": 24981,
                             "timeout": 5}
     initConfig["General"] = {"creategraph": "True",
-                            "outputConsole": "True"}
+                            "outputConsole": "False"}
     initConfig["3D Asset"] = {"importlods": "False"}
     conf.setUpInitialConfig(initConfig)
 
