@@ -6,8 +6,6 @@
 
 You can find it in the [realease](https://github.com/Raider-Arts/megascan-link/releases) tab of the github project 
 
-or in the Substance Share Platform _(Currently the plugin is being reviewed for publishing)_
-
 ##### Build types
 - Development Buid
     > This build is always updated as soon a commit is pushed on the master branch

@@ -26,10 +26,10 @@ class SocketThread(QtCore.QThread):
     onDataReceived = QtCore.Signal(object)
     #: flag that indicates that the socket should stop in the next timeout frame
     #:
-    #: see :meth:`~megascan_link.sockets.SocketThread.stop`
+    #: see :meth:`~megascan_link.sockets.SocketThread.close`
     #: 
     #: .. warning::
-    #:      dont use this flag directly use instead the :meth:`~megascan_link.sockets.SocketThread.stop` methods
+    #:      dont use this flag directly use instead the :meth:`~megascan_link.sockets.SocketThread.close` methods
     shouldClose = False
     #: flag that indicates that a restart is been requested, the restart is processed in the next timeout frame,
     #: it is cleared (False) when the restart happen
@@ -49,7 +49,7 @@ class SocketThread(QtCore.QThread):
     def run(self):
         """This is the method that manages the socket lifetime process
 
-        To interact with the socket use the :meth:`~megascan_link.sockets.SocketThread.stop` and :meth:`~megascan_link.sockets.SocketThread.restart` method instead
+        To interact with the socket use the :meth:`~megascan_link.sockets.SocketThread.close` and :meth:`~megascan_link.sockets.SocketThread.restart` method instead
 
         While this method is running the associated thread is kept alive **closing** the socket without requesting a **restart** will make this thread close too
 
@@ -152,6 +152,6 @@ class SocketThread(QtCore.QThread):
         """Set the needed flags to close the socket
 
         .. note::
-            The close operatiob is performed only after the timeout duration
+            The close operation is performed only after the timeout duration
         """       
         self.shouldClose = True
