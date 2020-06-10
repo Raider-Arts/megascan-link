@@ -7,7 +7,7 @@
 You can find it in the [realease](https://github.com/Raider-Arts/megascan-link/releases) tab of the github project 
 
 ##### Build types
-- Development Buid
+- Development Build
     > This build is always updated as soon a commit is pushed on the master branch
     ```eval_rst
     .. warning::
@@ -15,7 +15,7 @@ You can find it in the [realease](https://github.com/Raider-Arts/megascan-link/r
         So when use them expect them to not work or not behaving correctly
     ```
 
-- Tagged Buils
+- Tagged Builds
     > The tagged builds are stable usable builds
 
 ## Install the plugin
